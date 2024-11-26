@@ -1,0 +1,87 @@
+/* Sticky footer styles
+-------------------------------------------------- */
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    /* Margin bottom by footer height */
+    margin-bottom: 60px;
+}
+/* Custom page CSS
+  -------------------------------------------------- */
+
+/* Not required for template or sticky footer method. */
+
+body>.container {
+    padding: 60px 15px 0;
+}
+
+code {
+    font-size: 80%;
+}
+
+.search-box {
+    position: relative; /* Supaya ikon dapat ditempatkan di dalam kotak input */
+}
+
+.search-box input {
+    padding-left: 2.5rem; /* Memberi ruang untuk ikon di kiri */
+}
+
+.search-box .search-icon {
+    position: absolute;
+    top: 50%;
+    left: 0.75rem; /* Jarak ikon dari kiri */
+    transform: translateY(-50%);
+    color: #6c757d; /* Warna ikon, sesuai dengan tema Bootstrap */
+    pointer-events: none; /* Ikon tidak dapat diklik, hanya dekorasi */
+}
+
+.custom-margin {
+    margin-right: 10px; /* Sesuaikan dengan kebutuhan */
+}
+
+.card{
+    width: 20rem;
+}
+
+.footer {
+    width: 100%; /* Lebar penuh */
+    background-color: #1b2b2d; /* Warna hijau tua */
+    color: #d6f5e8; /* Warna teks hijau pucat */
+    text-align: center;
+    padding: 20px 0;
+    font-size: 14px;
+}
+
+.footer .social-icons {
+    margin-bottom: 10px;
+}
+
+.footer .social-icons .social-link {
+    margin: 0 10px;
+    font-size: 24px; /* Ukuran icon */
+    color: #d6f5e8;
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.footer .social-icons .social-link:hover {
+    transform: scale(1.2);
+    color: #ffffff; /* Warna saat hover */
+}
+
+.footer a {
+    color: #d6f5e8;
+    text-decoration: none;
+}
+
+.footer a:hover {
+    text-decoration: underline;
+}
+
+.card{
+    margin-bottom: 30px;
+}
