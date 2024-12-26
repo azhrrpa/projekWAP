@@ -12,10 +12,6 @@ if ($action == "login") {
         $_POST['email'],
         $_POST['password']
     );
-
-            // Jika bukan admin, arahkan ke halaman utama
-        return header("location:../index.php");
-    }
     
     return header("location:../login.php");
 }
