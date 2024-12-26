@@ -1,29 +1,30 @@
 <?php
 class ConnectionDatabase {
-    private $db_host = "localhost";
-    private $db_username = "root";
-    private $db_pass = "";
-    private $db_name = "pharmacy_app";
     public $connection;
 
-    function __construct()
-    {
-        // Membuat koneksi
-        $this->connection = new mysqli(
-            $this->db_host,
-            $this->db_username,
-            $this->db_pass,
-            $this->db_name
-        );
+    public function __construct() {
+        $host = "localhost";
+        $user = "root";
+        $password = "";
+        $database = "farmasi";
 
-        // Cek koneksi
+        // Inisialisasi koneksi
+        $this->connection = new mysqli($host, $user, $password, $database);
+
+        // Periksa apakah koneksi berhasil
         if ($this->connection->connect_error) {
-            die("Connection failed: " . $this->connection->connect_error);
+            die("Koneksi gagal: " . $this->connection->connect_error);
         }
     }
 
-    function closeConnection() {
-        $this->connection->close();
+    public function closeConnection() {
+        if ($this->connection) {
+            $this->connection->close(); // Menutup koneksi database
+        }
     }
 }
+
+// Membuat instance koneksi database
+$db = new ConnectionDatabase();
+$conn = $db->connection;
 ?>

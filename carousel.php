@@ -3,52 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Carousel Example</title>
     
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+
+      <!-- Bootstrap JS -->
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     
-    <!-- Custom CSS -->
-    <style>
-        .carousel {
-            margin-top: 30px;
-        }
-        
-        body {
-            padding-top: 50px; /* Jika header fixed */
-        }
-        .carousel-item img {
-            width: 100%;
-            height: auto;
-            max-height: 500px;
-            object-fit: cover;
-        }
-
-        .carousel-item {
-            background-color: #f0f0f0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 500px;
-        }
-
-        .carousel-control-prev-icon,
-        .carousel-control-next-icon {
-            background-color: rgba(0, 0, 0, 0.5);
-            border-radius: 50%;
-        }
-
-        .carousel-indicators [data-bs-target] {
-            background-color: #007bff;
-        }
-
-        .carousel-inner {
-            border-radius: 20px;
-            overflow: hidden;
-            max-width: 1500px;
-            margin: auto;
-        }
-    </style>
 </head>
 <body>
 
@@ -93,8 +54,45 @@
             <span class="visually-hidden">Next</span>
         </button>
     </div>
-
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+<style>
+        .carousel {
+            margin-top: 90px;
+        }
+        
+        body {
+            padding-top: 50px;
+        }
+        .carousel-item img {
+            width: 100%;
+            height: auto;
+            max-height: 500px;
+            object-fit: cover;
+        }
+
+        .carousel-item {
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 500px;
+        }
+
+        .carousel-control-prev-icon,
+        .carousel-control-next-icon {
+            background-color: rgba(0, 0, 0, 0.5);
+            border-radius: 50%;
+        }
+
+        .carousel-indicators [data-bs-target] {
+            background-color: #007bff;
+        }
+
+        .carousel-inner {
+            border-radius: 20px;
+            overflow: hidden;
+            max-width: 1500px;
+            margin: auto;
+        }
+    </style>
 </html>

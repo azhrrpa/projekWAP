@@ -2,11 +2,10 @@
 <html lang="en">
 <head>
     <?php include('header.php') ?>
+    <?php include('navbar.php') ?>
 </head>
 
 <body>
-    <?php include('navbar.php') ?>
-
     <main role="main " class="container">
         <div class="container mt-5">
             <div class="row mb-4">
@@ -37,28 +36,6 @@
     </main>
 
     <?php include('footer.php') ?>
-
-    <?php include('scripts.php') ?>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            // Cek apakah tombol login dan signup disembunyikan sebelumnya
-            if (localStorage.getItem("formSubmitted") === "true") {
-                const loginButton = document.getElementById("loginBtn");
-                const signUpButton = document.getElementById("signUpBtn");
-                
-                if (loginButton && signUpButton) {
-                    loginButton.style.display = "none";
-                    signUpButton.style.display = "none";
-                }
-            }
-
-            // Cek jika form register disubmit
-            const form = document.getElementById('registerForm');
-            form.addEventListener('submit', function () {
-                localStorage.setItem("formSubmitted", "true");  // Menyimpan status form telah disubmit
-            });
-        });
-    </script>
 </body>
 </html>
+

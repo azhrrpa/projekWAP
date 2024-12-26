@@ -1,51 +1,68 @@
 <?php
-session_start(); // Memulai session
+session_start();
 
-// Include file koneksi
 include('database/connection.php');
 
-// Buat objek dari ConnectionDatabase
-$db = new ConnectionDatabase();
-
-// Ambil data dari POST
-$productId = isset($_POST['product_id']) ? $_POST['product_id'] : null;
-$quantity = isset($_POST['quantity']) ? $_POST['quantity'] : null;
-$userId = $_SESSION['id']; // Ambil ID user dari session
-
-// Periksa apakah user sudah login
+// Pastikan user sudah login
 if (!isset($_SESSION['user_id'])) {
-    echo "Silakan login terlebih dahulu untuk menambahkan produk ke keranjang.";
-    exit(); // Hentikan eksekusi jika belum login
+    echo "Silakan login terlebih dahulu!";
+    exit;
 }
 
-if ($productId && $quantity) {
-    // Periksa apakah produk sudah ada di keranjang
-    $query = "SELECT * FROM cart WHERE user_id = ? AND product_id = ?";
-    $stmt = $db->connection->prepare($query);
-    $stmt->bind_param('ii', $userId, $productId);
-    $stmt->execute();
-    $result = $stmt->get_result();
+$user_id = $_SESSION['user_id']; // Ambil user_id dari sesi
+$productId = isset($_POST['product_id']) ? (int) $_POST['product_id'] : null;
+$quantity = isset($_POST['quantity']) ? (int) $_POST['quantity'] : null;
 
-    if ($result->num_rows > 0) {
-        // Produk sudah ada di keranjang, update quantity
-        $query = "UPDATE cart SET quantity = quantity + ? WHERE user_id = ? AND product_id = ?";
-        $stmt = $db->connection->prepare($query);
-        $stmt->bind_param('iii', $quantity, $userId, $productId);
-        $stmt->execute();
+// Validasi input
+if (!$productId || $quantity <= 0) {
+    echo "Data tidak valid!";
+    exit;
+}
+
+// Ambil informasi produk (harga dan nama produk)
+$query = "SELECT nama_produk, harga FROM produk WHERE id = ?";
+$stmt = $conn->prepare($query);
+$stmt->bind_param('i', $productId);
+$stmt->execute();
+$result = $stmt->get_result();
+
+if ($result->num_rows === 0) {
+    echo "Produk tidak ditemukan!";
+    exit;
+}
+
+$product = $result->fetch_assoc();
+$nama_produk = $product['nama_produk'];
+$harga = $product['harga'];
+$total_harga = $harga * $quantity; // Tambahkan perhitungan total harga
+
+// Cek apakah produk sudah ada di tabel cart
+$checkQuery = "SELECT * FROM cart WHERE id_pengguna = ? AND id_produk = ?";
+$checkStmt = $conn->prepare($checkQuery);
+$checkStmt->bind_param('ii', $user_id, $productId);
+$checkStmt->execute();
+$checkResult = $checkStmt->get_result();
+
+if ($checkResult->num_rows > 0) {
+    // Jika produk sudah ada, update jumlah dan total harga
+    $updateQuery = "UPDATE cart SET jumlah = jumlah + ?, total_harga = total_harga + (? * ?) WHERE id_pengguna = ? AND id_produk = ?";
+    $updateStmt = $conn->prepare($updateQuery);
+    $updateStmt->bind_param('iiiii', $quantity, $harga, $quantity, $user_id, $productId);
+    if ($updateStmt->execute()) {
         echo "Produk berhasil diperbarui di keranjang!";
     } else {
-        // Produk belum ada di keranjang, insert baru
-        $query = "INSERT INTO cart (user_id, product_id, quantity) VALUES (?, ?, ?)";
-        $stmt = $db->connection->prepare($query);
-        $stmt->bind_param('iii', $userId, $productId, $quantity);
-        $stmt->execute();
-        echo "Produk berhasil ditambahkan ke keranjang!";
+        echo "Gagal memperbarui keranjang: " . $conn->error;
     }
-
-    $stmt->close();
 } else {
-    echo "Data tidak lengkap!";
+    // Jika produk belum ada, tambahkan produk baru
+    $insertQuery = "INSERT INTO cart (id_pengguna, id_produk, jumlah, total_harga) VALUES (?, ?, ?, ?)";
+    $insertStmt = $conn->prepare($insertQuery);
+    $insertStmt->bind_param('iiii', $user_id, $productId, $quantity, $total_harga);
+    if ($insertStmt->execute()) {
+        echo "Produk berhasil ditambahkan ke keranjang!";
+    } else {
+        echo "Gagal menambahkan produk ke keranjang: " . $conn->error;
+    }
 }
 
-$db->closeConnection(); // Menutup koneksi
 ?>
